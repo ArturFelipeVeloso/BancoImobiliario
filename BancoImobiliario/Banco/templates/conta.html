@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Banco Imobiliário</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/blog-home.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Banco Imobiliário</a>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-6">
+
+        <h1 class="my-4">{{ Jogador.nome }}</h1>
+
+        <div class="card my-4">
+          <h5 class="card-header">Conta</h5>
+          <div class="card-body">
+            {{ Jogador.conta }}
+          </div>
+        </div>
+
+        <div class="card my-4">
+          <h5 class="card-header">Saldo</h5>
+          <div class="card-body">
+            R$ {{ Jogador.saldo }}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <h1 class="my-4">Ações</h1>
+
+        <div class="card mb-4 text-center">
+          <div class="card-body">
+            <h2 class="card-title">Banco</h2>
+            <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Pagar</button>
+            <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">Receber</button>
+          </div>
+        </div>
+
+        <div class="card mb-4 text-center">
+          <div class="card-body">
+            <h2 class="card-title">Caixa eletrônico</h2>
+            <button type="button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#exampleModal3" data-whatever="@mdo">Transferir</button>
+          </div>
+        </div>
+
+        <div class="card mb-4 text-center">
+          <div class="card-body">
+            <h2 class="card-title">Banco Imobiliário News</h2>
+            <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#exampleModal4" data-whatever="@mdo">Notícia</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Pagar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Valor:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button onclick="Pagar();" type="button" class="btn btn-primary">Efetuar o pagamento</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel2">Receber</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Valor:</label>
+              <input type="text" class="form-control" id="recipient-name2">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button onclick="Receber();" type="button" class="btn btn-primary">Efetuar o recebimento</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel3">Transferir</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">Favorecido:</label>
+                  <select class="form-control" id="exampleFormControlSelect1">
+                    {% for jogador in Jogadores %}
+                    {% if jogador.partida == Jogador.partida and jogador.conta != Jogador.conta %}
+                    <option value="{{jogador.conta}}">{{ jogador.nome }}</option>
+                    {% endif %}
+                  {% endfor %}
+                  </select>
+                </div>
+
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Valor:</label>
+              <input type="text" class="form-control" id="recipient-name3">
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button onclick="transferir();" type="button" class="btn btn-primary">Efetuar a transferência</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel4">{{ Noticia.titulo }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">{{ Noticia.noticia }}</label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button onclick="reload();" type="button" class="btn btn-primary">Tudo bem!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function Pagar() {
+
+      var valor = document.getElementById("recipient-name");
+
+      if (valor.value != "") {
+          window.history.pushState("", "", "/");
+          window.location.href = "http://192.168.0.103:8000/{{Jogador.partida.id}}/jogadores/{{Jogador.conta}}/conta/sacar/"+valor.value;
+      }
+    }
+
+    function Receber() {
+
+      var valor = document.getElementById("recipient-name2");
+
+      if (valor.value != "") {
+          window.history.pushState("", "", "/");
+          window.location.href = "http://192.168.0.103:8000/{{Jogador.partida.id}}/jogadores/{{ Jogador.conta }}/conta/depositar/"+valor.value;
+      }
+    }
+
+    function reload() {
+          window.location.href = "http://192.168.0.103:8000/{{Jogador.partida.id}}/jogadores/{{ Jogador.conta }}/conta";
+    }
+
+    function transferir() {
+
+      var valor = document.getElementById("recipient-name3");
+      var favorecido = document.getElementById("exampleFormControlSelect1");
+
+      if (valor.value != "") {
+          window.history.pushState("", "", "/");
+          window.location.href = "http://192.168.0.103:8000/{{Jogador.partida.id}}/jogadores/{{ Jogador.conta }}/conta/transferir/"+valor.value+"/"+favorecido.value;
+      }
+    }
+  </script>
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Fábrica de Gênios THE 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>
